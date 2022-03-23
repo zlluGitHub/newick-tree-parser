@@ -14,7 +14,7 @@ const newick = new Newick('some data')
 ### NewickTools.dfs
 Returns nodes data
 ```js
-import { NewickTools } from 'newick'
+import { NewickTools } from 'newick-tree-parser'
 NewickTools.dfs(tree)
 ```
 tree - string or parsed object
@@ -59,7 +59,7 @@ Returns object
 ### NewickTools.equals
 Check if two trees are equal
 ```js
-import { NewickTools } from 'newick'
+import { NewickTools } from 'newick-tree-parser'
 
 NewickTools.equals(tree1, tree2)
 ```
@@ -79,7 +79,7 @@ NewickTools.equals(tree1, tree2); // false
 ### NewickTools.getRoot
 Returns a root of the tree
 ```js
-import { NewickTools } from 'newick'
+import { NewickTools } from 'newick-tree-parser'
 
 NewickTools.getRoot(s)
 ```
@@ -98,7 +98,7 @@ Iterates tree's nodes and applies callback for each node
 
 Alias for NewickTools.dfs(tree, callback)
 ```js
-import { NewickTools } from 'newick'
+import { NewickTools } from 'newick-tree-parser'
 
 NewickTools.map(tree, callback)
 ```
@@ -145,7 +145,7 @@ Returns object
 
 Returns normalized tree in [0; 1]
 ```js
-import { NewickTools } from 'newick'
+import { NewickTools } from 'newick-tree-parser'
 
 NewickTools.normalize(tree)
 ```
@@ -168,7 +168,7 @@ Returns object
 ### NewickTools.parse
 Parse Newick string into tree-object
 ```js
-import { NewickTools } from 'newick'
+import { NewickTools } from 'newick-tree-parser'
 
 NewickTools.parse(s)
 ```
@@ -208,7 +208,7 @@ Returns object
 ### NewickTools.serialize
 Serializes tree
 ```js
-import { NewickTools } from 'newick'
+import { NewickTools } from 'newick-tree-parser'
 
 NewickTools.serialize(tree)
 ```
@@ -277,4 +277,63 @@ tree = getRoot(tree);
 Returns string (root name)
 ```js
 'F'
+```
+
+### private.serialize
+Serializes tree
+
+private
+```js
+serialize(node)
+```
+node - tree node
+```js
+var tree = Newick.parse('(A:0.1,B:0.2,(C:0.3,D:0.4)E:0.5)F');
+var serializedTree = Newick.serialize(tree)
+```
+Returns string
+```js
+'(A:0.1,B:0.2,(C:0.3,D:0.4)E:0.5)F'
+```
+
+### public.dfs
+Returns nodes data
+
+public method
+```js
+var data = newick.dfs();
+var tree = new Newick('(A:0.1,B:0.2,(C:0.3,D:0.4)E:0.5)F');
+var data = newick.dfs();
+```
+Returns object
+```js
+{
+  A: 0.1,
+  B: 0.2,
+  C: 0.3,
+  D: 0.4,
+  E: 0.5
+}
+```
+---
+```js
+var data = newick.dfs(nodeCallback);
+```
+nodeCallback - function (node)
+```js
+var tree = new Newick('(A:0.1,B:0.2,(C:0.3,D:0.4)E:0.5)F');
+var data = newick.dfs(function (e) {
+  e.length *= 10;
+  return e;
+});
+```
+Returns object
+```js
+{
+  A: 1,
+  B: 2,
+  C: 3,
+  D: 4,
+  E: 5
+}
 ```
